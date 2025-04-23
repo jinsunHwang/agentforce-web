@@ -249,6 +249,18 @@ footer p {
     border: 0;
 }
 
+.chatbot-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.chatbot-button img {
+    width: 64px; /* You can adjust the size if needed */
+    height: 64px; /* Ensure the image is square */
+}
+
 /* 반응형 디자인 */
 @media (max-width: 768px) {
     .middle-section {
