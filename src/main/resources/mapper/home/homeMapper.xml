@@ -1,0 +1,7 @@
+<mapper namespace="com.agent.agentforce.mapper.HomeMapper">
+    <select id="getHomeData" resultType="java.util.HashMap">
+        SELECT title, description
+        FROM home_table
+        WHERE id = 1;
+    </select>
+</mapper>
