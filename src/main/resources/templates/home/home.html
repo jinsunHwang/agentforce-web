@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행사 비즈니스</title>
     <link rel="stylesheet" href="/css/style.css">
+    <script type='text/javascript'>
+		function initEmbeddedMessaging() {
+			try {
+				embeddedservice_bootstrap.settings.language = 'ko'; // For example, enter 'en' or 'en-US'
+	
+				embeddedservice_bootstrap.init(
+					'00DgK000000UK7r',
+					'Travel_Service_Embedded_Service',
+					'https://orgfarm-91676bf643-dev-ed.develop.my.site.com/ESWTravelServiceEmbedde1745468409561',
+					{
+						scrt2URL: 'https://orgfarm-91676bf643-dev-ed.develop.my.salesforce-scrt.com'
+					}
+				);
+			} catch (err) {
+				console.error('Error loading Embedded Messaging: ', err);
+			}
+		};
+	</script>
+	<script type='text/javascript' src='https://orgfarm-91676bf643-dev-ed.develop.my.site.com/ESWTravelServiceEmbedde1745468409561/assets/js/bootstrap.min.js' on‍load='initEmbeddedMessaging()'></script>
 </head>
 <body>
 <!-- 헤더 -->
