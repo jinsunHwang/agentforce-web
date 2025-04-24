@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+  response.setHeader("X-Frame-Options", "ALLOW-FROM https://*.salesforce.com");
+  response.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://*.salesforce.com https://*.force.com https://*.my.site.com");
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
