@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>여행사 비즈니스</title>
     <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/home.js"></script>
 </head>
 <body>
 <!-- 헤더 -->
@@ -67,34 +68,29 @@
 </section>
 
 <!-- 챗봇 버튼 -->
-<!-- 
 <div class="chatbot-button">
-    <img src="/images/chat.png" alt="챗봇 열기" onclick="launchChat()" style="cursor: pointer;">
+    <img src="/images/chat.png" alt="챗봇 열기" onclick="openChatbot()" style="cursor: pointer;">
 </div>
--->
-
+<div id="chatbot-window" class="chatbot-window">
+    <div class="chatbot-header">
+        <span>Agentforce</span>
+        <img src="/images/cancel.png" alt="챗봇 닫기" onclick="toggleChatbot()" style="cursor: pointer;">
+    </div>
+    <div class="chatbot-body" id="chatbotBody">
+        <div class="chatbot-message bot">
+            <img src="/images/bot.png" alt="Agentforce">
+            <span>Hi! I'm Agentforce, an AI assistant. I can do things like search your Salesforce data or the internet, edit your Salesforce records, and draft or revise emails and fields....</span>
+        </div>
+        <!-- 사용자 메시지가 이곳에 표시됩니다 -->
+    </div>
+    <div class="chatbot-footer">
+        <input type="text" id="userInput" placeholder="Describe your task or ask a question..." onkeydown="enterMessage(event)">
+        <button onclick="sendMessage()">전송</button>
+    </div>
+</div>
 <!-- 푸터 -->
 <footer>
     <p>&copy; 2025 여행사 비즈니스. 모든 권리 보유.</p>
 </footer>
-<script type='text/javascript'>
-	function initEmbeddedMessaging() {
-		try {
-			embeddedservice_bootstrap.settings.language = 'ko'; // For example, enter 'en' or 'en-US'
-
-			embeddedservice_bootstrap.init(
-				'00DgK000000UK7r',
-				'Travel_Service',
-				'https://orgfarm-91676bf643-dev-ed.develop.my.site.com/ESWTravelService1745482844029',
-				{
-					scrt2URL: 'https://orgfarm-91676bf643-dev-ed.develop.my.salesforce-scrt.com'
-				}
-			);
-		} catch (err) {
-			console.error('Error loading Embedded Messaging: ', err);
-		}
-	};
-</script>
-<script type='text/javascript' src='https://orgfarm-91676bf643-dev-ed.develop.my.site.com/ESWTravelService1745482844029/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
 </body>
 </html>
