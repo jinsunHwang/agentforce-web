@@ -11,7 +11,7 @@ const toggleChatbot = ()=>{
     }
 };
 
-const sendMessage = ()=>{
+const sendMessage = async ()=>{
     const inputField = document.getElementById('userInput');
     const message = inputField.value;
     if (message.trim() !== "") {
@@ -28,6 +28,9 @@ const sendMessage = ()=>{
 
         // Clear input field
         inputField.value = '';
+
+        await callMessage(message);
+
     }
 };
 
@@ -36,3 +39,18 @@ const enterMessage = (event) =>{
         sendMessage();
     }
 };
+
+const callMessage = async (message) => {
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/home/chat',
+            data: {
+                message: message,
+            }
+        });
+        console.log(response);
+    } catch (error) {
+        console.error('error'+error);
+    }
+}
