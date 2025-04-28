@@ -23,9 +23,11 @@ public class HomeService {
     private final String USERNAME      = "jhchoi398@agentforce.com";
     private final String PASSWORD      = "qlalfqjsgh@8895hrelp0LLIXdPwSBfxGfi5icV4";
     
-    private final String AGENT_ID      = "0XxgK000000J5SDSA0";
+    private final String AGENT_ID      = "0XxgK000000JG4HSAW";
     private final String AGENT_API_URL = "https://api.salesforce.com/einstein/ai-agent/v1/agents/" + AGENT_ID + "/sessions";
-
+    private final String AGENT_SESSION_URL = "https://api.salesforce.com/einstein/ai-agent/v1/sessions/";
+    
+    static String agentSessionId = "";
 
     public String getAccessToken() {
         // RestTemplate 객체 생성
@@ -116,7 +118,7 @@ public class HomeService {
         }
     }
 	
-	public String sendMessage(String message) {
+	public String agentInit() {
 	    RestTemplate restTemplate = new RestTemplate();
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
@@ -143,6 +145,46 @@ public class HomeService {
 	    try {
 	    	ResponseEntity<Map> response = restTemplate.postForEntity(AGENT_API_URL, request, Map.class);
             Map<String, Object> responseBody = response.getBody();
+
+            if (responseBody != null && responseBody.containsKey("messages")) {
+            	List<Map<String, Object>> messages = (ArrayList<Map<String, Object>>) responseBody.get("messages");
+            	
+            	if(agentSessionId.isEmpty()) {
+            		agentSessionId = (String) responseBody.get("sessionId");
+            	}
+            	
+                return (String) messages.get(0).get("message");
+            } else {
+                throw new RuntimeException("Error");
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error", e);
+        }
+	}
+	
+	public String sendMessage(String message) {
+		RestTemplate restTemplate = new RestTemplate();
+	    HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    headers.setBearerAuth(getValidAccessToken());
+	    
+	    Map<String, Object> body = new HashMap<>();
+	    
+	    Map<String, Object> messageMap = new HashMap<>();
+	    messageMap.put("sequenceId", 1);
+	    messageMap.put("type", "Text");
+	    messageMap.put("text", message);
+	    
+	    body.put("message", messageMap);
+
+	    HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
+	    
+	    try {
+	    	ResponseEntity<Map> response = restTemplate.postForEntity(AGENT_SESSION_URL + agentSessionId + "/messages", request, Map.class);
+            Map<String, Object> responseBody = response.getBody();
+            
+            System.out.println(responseBody);
 
             if (responseBody != null && responseBody.containsKey("messages")) {
             	List<Map<String, Object>> messages = (ArrayList<Map<String, Object>>) responseBody.get("messages");

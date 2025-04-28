@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -30,11 +31,19 @@ public class HomeController {
         return mav;
     }
 
-    @PostMapping("/chat")
-    public String callMessage(@RequestBody Map<String,Object> requestMap) {
-        Map<String,Object> map = new HashMap<>();
-        String message = (String) requestMap.get("message");
-        String returnMessage =homeService.sendMessage(message);
-        return returnMessage;
+    @PostMapping("/agentInit")
+    @ResponseBody
+    public String agentInit() {
+        return homeService.agentInit();
     }
+    
+    @PostMapping("/sentMessage")
+	@ResponseBody
+	public String sentMessage(@RequestBody Map<String, Object> payload) {
+	    String message = (String) payload.get("message");
+	    // → Salesforce Agentforce에 REST 요청
+	    String agentResponse = homeService.sendMessage(message);
+	    
+	    return agentResponse;
+	}
 }
