@@ -1,4 +1,5 @@
-const openChatbot = () =>{
+const openChatbot = async () =>{
+    await initAgent();
     toggleChatbot();
 };
 
@@ -34,6 +35,18 @@ const sendMessage = async ()=>{
     }
 };
 
+const initAgent = async () =>{
+    try {
+        const response = await axios({
+            method: 'post',
+            url: '/home/agentInit',
+        });
+        console.log(response);
+    } catch (error) {
+        console.error('error'+error);
+    }
+};
+
 const enterMessage = (event) =>{
     if(event.keyCode === 13) {
         sendMessage();
@@ -44,12 +57,20 @@ const callMessage = async (message) => {
     try {
         const response = await axios({
             method: 'post',
-            url: '/home/chat',
+            url: '/home/sentMessage',
             data: {
                 message: message,
             }
         });
-        console.log(response);
+        const userMessage = document.createElement('div');
+        userMessage.classList.add('chatbot-message', 'bot');
+        userMessage.innerHTML = `<img src="/images/bot.png" alt="User Avatar"><span>${response.data}</span>`;
+
+        // Append the message to the chatbot body
+        document.getElementById('chatbotBody').appendChild(userMessage);
+
+        // Scroll to the latest message
+        document.getElementById('chatbotBody').scrollTop = document.getElementById('chatbotBody').scrollHeight;
     } catch (error) {
         console.error('error'+error);
     }
