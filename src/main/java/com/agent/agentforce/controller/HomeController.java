@@ -30,6 +30,11 @@ public class HomeController {
         mav.setViewName("home/home");
         return mav;
     }
+    
+    @GetMapping("/healthcheck")
+    public String healthcheck() {
+    	return "OK";
+    }
 
     @PostMapping("/agentInit")
     @ResponseBody

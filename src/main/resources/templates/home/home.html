@@ -106,6 +106,10 @@
 					scrt2URL: 'https://orgfarm-91676bf643-dev-ed.develop.my.salesforce-scrt.com'
 				}
 			);
+			
+			embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
+				ProductCode : "TP000003"
+	      	});
 		} catch (err) {
 			console.error('Error loading Embedded Messaging: ', err);
 		}
